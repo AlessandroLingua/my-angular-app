@@ -1,0 +1,27 @@
+<h1>Task Manager</h1>
+    <input
+      [(ngModel)]="newTaskTitle"
+      placeholder="Task Title"
+    />
+    <input
+      [(ngModel)]="newTaskDescription"
+      placeholder="Task Description"
+    />
+    <button (click)="addTask()">Add Task</button>
+
+    <h2>Task List</h2>
+    <label for="filter">Show: </label>
+    <select id="filter" [(ngModel)]="filter">
+      <option value="">All</option>
+      <option value="completed">Completed</option>
+      <option value="incompleted">Incompleted</option>
+    </select>
+
+    <ul *ngIf="(tasks | taskFilter:filter).length > 0; else noTasks">
+      <li *ngFor="let task of tasks | taskFilter:filter">
+        <app-task [task]="task"></app-task>
+      </li>
+    </ul>
+    <ng-template #noTasks>
+      <p>No matching tasks found.</p>
+    </ng-template>

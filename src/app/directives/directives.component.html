@@ -1,0 +1,21 @@
+<h1>Structural Directives Example</h1>
+<button (click)="toggleNames()">
+    {{ showNames ? 'Hide' : 'Show' }} Names
+</button>
+<ul *ngIf="showNames; else noNames">
+    <li *ngFor="let name of names">{{ name }}</li>
+</ul>
+<ng-template #noNames>
+    <p>No names to display.</p>
+</ng-template>
+<p>Current Date: {{ currentDate | date:'fullDate' }}</p>
+<p>Price: {{ price | currency:'EUR':'symbol':'1.2-2' }}</p>
+
+<h1>Filter Names</h1>
+<input [(ngModel)]="filterText" placeholder="Type to filter names..." />
+<ul *ngIf="(names | nameFilter:filterText).length > 0; else noResults">
+    <li *ngFor="let name of names | nameFilter:filterText">{{ name }}</li>
+</ul>
+<ng-template #noResults>
+    <p>No matching names found.</p>
+</ng-template>

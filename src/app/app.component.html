@@ -47,19 +47,31 @@
         </defs>
       </svg>
       <h1>{{ title }}</h1>
-      <div class="separator">
-        <app-greeting [name]="'John'"></app-greeting>
-        <app-counter></app-counter>
-      </div>
-      <div class="separator">
-        <app-directives></app-directives>
-      </div>
-      <div class="separator">
-        <p>Original: Hello Angular</p>
-        <p>Reversed: {{ 'Hello Angular' | reverse }}</p>
-      </div>
-      <div class="separator">
-        <app-task-list></app-task-list>
+      <button (click)="toggleSection()">
+        {{ showSection ? 'Hide' : 'Show' }} entire section
+    </button>
+      <div *ngIf="showSection">
+        <div class="separator">
+          <app-greeting [name]="'John'"></app-greeting>
+          <app-counter></app-counter>
+        </div>
+        <div class="separator">
+          <app-directives></app-directives>
+        </div>
+        <div class="separator">
+          <p>Original: Hello Angular</p>
+          <p>Reversed: {{ 'Hello Angular' | reverse }}</p>
+        </div>
+        <div class="separator">
+          <app-task-list></app-task-list>
+        </div>
+        <div class="separator">
+          <h1>Boolean Toggle Demo</h1>
+          <app-toggle-message></app-toggle-message>
+        </div>
+        <div class="separator">
+          <app-items></app-items>
+        </div>
       </div>
     </div>
     <!-- <div class="divider" role="separator" aria-label="Divider"></div> -->

@@ -1,0 +1,7 @@
+<button (click)="toggleMessage()">
+    {{ showMessage ? 'Hide' : 'Show' }} Message
+</button>
+
+<p *ngIf="showMessage">
+    This is my toggled message!
+</p>

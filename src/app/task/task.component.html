@@ -1,8 +1,8 @@
 <div [ngClass]="{ completed: task.completed }" class="task">
-    <h3>{{ task.title | uppercase }}</h3>
-    <p>{{ task.description }}</p>
-    <p>Due: {{ task.dueDate | date:'shortDate' }}</p>
-    <button (click)="toggleComplete()">
-      {{ task.completed ? 'Mark Incomplete' : 'Mark Complete' }}
-    </button>
-  </div>
+  <h3>{{ task.title | uppercase }}</h3>
+  <p>{{ task.description }}</p>
+  <p>Due: {{ task.dueDate | date:'shortDate' }}</p>
+  <button (click)="toggleComplete()">
+    {{ task.completed ? 'Mark Incomplete' : 'Mark Complete' }}
+  </button>
+</div>

@@ -5,3 +5,9 @@ ul {
 button {
     margin-top: 10px;
 }
+.task {
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}

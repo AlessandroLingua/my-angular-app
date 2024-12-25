@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 import { Task } from '../task/interfaces';
 import { FormsModule } from '@angular/forms';
 import { TaskComponent } from '../task/task.component';
-import { TaskFilterPipe } from '../pipes/task-filter.pipe';
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule, FormsModule, TaskComponent, TaskFilterPipe],
+  imports: [CommonModule, FormsModule, TaskComponent],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
@@ -29,38 +28,49 @@ export class TaskListComponent {
     }
   ];
 
-  newTaskTitle: string = '';
-  newTaskDescription: string = '';
-  filter: string = ''; // Current filter
-  filteredTasks: Task[] = [...this.tasks]; // Maintain a filtered task list
+  newTaskTitle = '';
+  newTaskDescription = '';
+  newDueDate = new Date();
+  selectedTask: Task | null = null;
+
+  filter: string = '';
 
   addTask() {
-    if (this.newTaskTitle && this.newTaskDescription) {
+    if (this.newTaskTitle && this.newTaskDescription && this.newDueDate) {
       const newTask: Task = {
         id: this.tasks.length + 1,
         title: this.newTaskTitle,
         description: this.newTaskDescription,
-        dueDate: new Date(),
-        completed: false
+        dueDate: new Date(this.newDueDate),
+        completed: false,
       };
       this.tasks.push(newTask);
       this.newTaskTitle = '';
       this.newTaskDescription = '';
-      this.applyFilter(); // Reapply filter after adding a new task
+      this.newDueDate = new Date();
     }
   }
 
-  applyFilter() {
-    if (this.filter) {
-      this.filteredTasks = this.tasks.filter(task =>
-        this.filter === 'completed' ? task.completed : !task.completed
-      );
-    } else {
-      this.filteredTasks = [...this.tasks];
+  editTask(task: Task) {
+    this.selectedTask = { ...task, 
+      dueDate: new Date(task.dueDate).toISOString().split('T')[0]};
+  }
+
+  updateTask() {
+    if (this.selectedTask) {
+      const taskIndex = this.tasks.findIndex(task => task.id === this.selectedTask!.id);
+      if (taskIndex > -1) {
+        this.tasks[taskIndex] = { ...this.selectedTask, dueDate: new Date(this.selectedTask.dueDate) };
+      }
+      this.selectedTask = null; // Close edit form
     }
   }
 
-  onTaskUpdated() {
-    this.applyFilter(); // Reapply filter when a task's state changes
+  cancelEdit() {
+    this.selectedTask = null;
+  }
+
+  deleteTask(taskId: number) {
+    this.tasks = this.tasks.filter(task => task.id !== taskId);
   }
 }

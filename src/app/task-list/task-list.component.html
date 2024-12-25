@@ -1,27 +1,42 @@
 <h1>Task Manager</h1>
-    <input
-      [(ngModel)]="newTaskTitle"
-      placeholder="Task Title"
-    />
-    <input
-      [(ngModel)]="newTaskDescription"
-      placeholder="Task Description"
-    />
-    <button (click)="addTask()">Add Task</button>
+<!-- Add New Task -->
+<input [(ngModel)]="newTaskTitle" placeholder="Task Title" />
+<input [(ngModel)]="newTaskDescription" placeholder="Task Description" />
+<input [(ngModel)]="newDueDate" type="date" placeholder="Due date" />
+<button (click)="addTask()">Add Task</button>
 
-    <h2>Task List</h2>
-    <label for="filter">Show: </label>
-    <select id="filter" [(ngModel)]="filter">
-      <option value="">All</option>
-      <option value="completed">Completed</option>
-      <option value="incompleted">Incompleted</option>
-    </select>
+<h2>Task List</h2>
 
-    <ul *ngIf="(tasks | taskFilter:filter).length > 0; else noTasks">
-      <li *ngFor="let task of tasks | taskFilter:filter">
-        <app-task [task]="task"></app-task>
-      </li>
-    </ul>
-    <ng-template #noTasks>
-      <p>No matching tasks found.</p>
-    </ng-template>
+<!-- Filter Task completed-->
+<label for="filter">Filter Tasks:</label>
+<select id="filter" [(ngModel)]="filter">
+  <option value="">All</option>
+  <option value="completed">Completed</option>
+  <option value="incompleted">Incomplete</option>
+</select>
+
+<ul *ngIf="tasks.length > 0; else noTasks">
+  <li *ngFor="let task of tasks">
+    <!-- Display Task -->
+    <div *ngIf="selectedTask?.id !== task.id">
+      <app-task [task]="task"></app-task>
+      <button (click)="deleteTask(task.id)">Delete</button>
+      <button (click)="editTask(task)">Edit</button>
+    </div>
+
+    <!-- Edit Task Form -->
+    <div *ngIf="selectedTask?.id === task.id">
+      <div *ngIf="selectedTask">
+        <h3>Edit Task</h3>
+        <input [(ngModel)]="selectedTask.title" placeholder="Task Title" />
+        <input [(ngModel)]="selectedTask.description" placeholder="Task Description" />
+        <input [(ngModel)]="selectedTask.dueDate" type="date" placeholder="Due date" />
+        <button (click)="updateTask()">Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
+  </li>
+</ul>
+<ng-template #noTasks>
+  <p>No tasks available.</p>
+</ng-template>

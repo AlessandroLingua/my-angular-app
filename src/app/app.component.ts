@@ -17,7 +17,7 @@ import { ItemsComponent } from "./items/items.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Learning Project in Angular';
+  title = 'my-angular-app';
   names: string[] = ['Alice', 'Bob', 'Charlie', 'David'];
   filterText: string = ''; // Input for filtering
   showSection: boolean = true;

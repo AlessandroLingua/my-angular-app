@@ -18,6 +18,7 @@ import { ItemsComponent } from "./items/items.component";
 })
 export class AppComponent {
   title = 'my-angular-app';
+  imageUrl = 'https://angular.io/assets/images/logos/angular/angular.svg';
   names: string[] = ['Alice', 'Bob', 'Charlie', 'David'];
   filterText: string = ''; // Input for filtering
   showSection: boolean = true;
